@@ -14,7 +14,7 @@
 |:--|:-:|:-:|
 |prod|MariaDB|x|
 |dev|MariaDB|x|
-|local|H2(In memory)|H2(In memory)|
+|default|H2(In memory)|H2(In memory)|
 
 - Maria DB
   - Flywayでデータの変更を保持したまま作業する。
