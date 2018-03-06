@@ -13,7 +13,7 @@
 - 物理変更をユーザーが行わなくてよい。
 - テーブル定義変更スクリプトがテスト済である。
 
-## データベース、環境に合わせたFlywayとschema/data.sqlとの使い分け
+## データベース、環境に合わせたFlywayの使い分け
 ||app|test|
 |:--|:-:|:-:|
 |prod|MariaDB|x|
@@ -47,4 +47,9 @@
 |:--|:-:|:-:|
 |prod|x|x|
 |dev|手動|x|
-|default|Flyway(clean -> migrate) + data.sql|Flyway(clean -> migrate) + data.sql|
+|default|Flyway(+ dataset)|Flyway(+ dataset)|
+
+- データセット指定オプション
+  - default: flyway.locations=classpath:/db/migration, classpath:/db/dataset
+  - dev: flyway.locations=classpath:/db/migration
+  - prod: flyway.locations=classpath:/db/migration
