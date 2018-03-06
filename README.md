@@ -1,22 +1,50 @@
-||schema.sql, data.sql|Flyway|
+# Spring Boot Flyway
+## 特徴
+||schema/data.sql|Flyway|
 |:--|:-:|:-:|
 |履歴|Git|V*__*.SQL|
 |定義変更|変更後の状態を記述|変更スクリプトを記述|
-|状態確認|schema.sql, data.sql|migrateコマンド発行後のDB|
+|状態確認|schema/data.sql|migrateコマンド発行後のDB|
 |物理変更|ユーザー|Flyway|
 
-- H2
-  - テーブル定義を確認しやすい。
-- Flyway
-  - テーブル定義の変更をユーザーが行わなくてよい。
+### schema/data.sql
+- テーブル定義を確認しやすい。
+### Flyway
+- 物理変更をユーザーが行わなくてよい。
+- テーブル定義変更スクリプトがテスト済である。
 
+## データベース、環境に合わせたFlywayとschema/data.sqlとの使い分け
 ||app|test|
 |:--|:-:|:-:|
 |prod|MariaDB|x|
 |dev|MariaDB|x|
 |default|H2(In memory)|H2(In memory)|
 
-- Maria DB
-  - Flywayでデータの変更を保持したまま作業する。
-- H2(In memory)
-  - schema.sql, data.sqlを使う場合と同様にFlywayで作業可能。
+### Maria DB
+- セットアップ後にデータの操作は行わない。
+### H2(In memory)
+- テストデータを都度挿入する。
+
+### DDL
+
+||app|test|
+|:--|:-:|:-:|
+|prod|Flyway|x|
+|dev|Flyway|x|
+|default|Flyway|Flyway|
+
+### DML(マスターデータ)
+
+||app|test|
+|:--|:-:|:-:|
+|prod|Flyway|x|
+|dev|Flyway|x|
+|default|Flyway|Flyway|
+
+### DML(テストデータ)
+
+||app|test|
+|:--|:-:|:-:|
+|prod|x|x|
+|dev|手動|x|
+|default|Flyway(clean -> migrate) + data.sql|Flyway(clean -> migrate) + data.sql|
